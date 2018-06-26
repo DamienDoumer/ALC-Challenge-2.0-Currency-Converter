@@ -1,98 +1,49 @@
 
 class Converter
 {
-    constructor(doneButton)
+    constructor()
     {
-        this.doneButton = doneButton;
-
-        this.doneButton.addEventListener("click", () => 
-        {
-            alert("Clicked");
-        });
     }
 
 
     getAllCurrencies()
     {
         return fetch("https://free.currencyconverterapi.com/api/v5/currencies");
-        // .then(response => 
-        // { 
-        //     response.json().then((jsonData) => {
-        //         return jsonData;
-        //     });
-        // });
     }
 
-    // convertCurrency()
-    // {
-    //     fetch("https://free.currencyconverterapi.com/api/v5/currencies").catch(e => 
-    // {
-    //     console.log(e);
-    // }).then(data => 
-    // {
-        
-    //     //console.log(JSON.stringify(data.json()));
-    // })
-    // }
-    
+    //Converts the currency
+    convertCurrency(amount, fromCurrency, toCurrency, callBack)
+    {
+        fromCurrency = encodeURIComponent(fromCurrency);
+        toCurrency = encodeURIComponent(toCurrency);
+        const query = fromCurrency + '_' + toCurrency;
 
-    // convertCurrency(amount, fromCurrency, toCurrency, cb) {
+        //we build the URL
+        const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`;
 
-    //     var apiKey = 'your-api-key-here';
-      
-    //     fromCurrency = encodeURIComponent(fromCurrency);
-    //     toCurrency = encodeURIComponent(toCurrency);
-    //     var query = fromCurrency + '_' + toCurrency;
-      
-    //     var url = 'https://www.currencyconverterapi.com/api/v5/convert?q='
-    //               + query + '&compact=ultra&apiKey=' + apiKey;
-      
-    //     https.get(url, function(res){
-    //         var body = '';
-      
-    //         res.on('data', function(chunk){
-    //             body += chunk;
-    //         });
-      
-    //         res.on('end', function(){
-    //             try {
-    //               var jsonObj = JSON.parse(body);
-      
-    //               var val = jsonObj[query];
-    //               if (val) {
-    //                 var total = val * amount;
-    //                 cb(null, Math.round(total * 100) / 100);
-    //               } else {
-    //                 var err = new Error("Value not found for " + query);
-    //                 console.log(err);
-    //                 cb(err);
-    //               }
-    //             } catch(e) {
-    //               console.log("Parse error: ", e);
-    //               cb(e);
-    //             }
-    //         });
-    //     }).on('error', function(e){
-    //           console.log("Got an error: ", e);
-    //           cb(e);
-    //     });
-    //   }
-      
-    //   //uncomment to test
-    //   /*
-    //   convertCurrency(10, 'USD', 'PHP', function(err, amount) {
-    //     console.log(amount);
-    //   });
-    //   */
+        fetch(url)
+        .catch(error => callBack(error))
+        .then(results => 
+        {
+            //Invoke's the call back method of the upper layer using this class after 
+            //converting the result to json.
+            results.json().then(jsonData => 
+                {
+                    callBack(null, jsonData[query]);
+                });
+        });
+    }
 }
 
 
-let submitButton = document.getElementById("submit_button");
-let toSelect = document.getElementById("currency_to_dropdown");
-let fromSelect = document.getElementById("currency_from_dropdown");
+const submitButton = document.getElementById("submit_button");
+const toSelect = document.getElementById("currency_to_dropdown");
+const fromSelect = document.getElementById("currency_from_dropdown");
+const amountEntry = document.getElementById('amount_entry');
+const convertedValueEntry = document.getElementById('converted_value_entry');
 
 //create a converter object
-let converter = new Converter(submitButton);
+let converter = new Converter();
 
 //Get all the currencies, then add them to the Drop downs on the index.html page
 converter.getAllCurrencies().then(response => 
@@ -101,20 +52,67 @@ converter.getAllCurrencies().then(response =>
                 let data = jsonData.results;
                 let set = {data};
                 
-                Object.keys(jsonData.results).forEach(function(key,index) {
-                    console.log(jsonData.results[key]);
+                Object.keys(jsonData.results).forEach((key,index) => {
+                    
                     let currency = jsonData.results[key];
-                    let option = document.createElement("option");
+                    let option1 = document.createElement("option");
+                    let option2 = document.createElement("option");
+
+                    //format the string which will be displayed in each
+                    //drop down's options.
                     if(!currency.currencySymbol)
-                    {    option.text = `(${currency.id}) ${currency.currencyName}`; }
+                    {    
+                        option1.text = `(${currency.id}) ${currency.currencyName}`;
+                        option2.text = `(${currency.id}) ${currency.currencyName}`;
+                    }
+                    
                     else
                     {
-                        option.text = `(${currency.id}) ${currency.currencyName} ${currency.currencySymbol}`;
+                        option1.text = `(${currency.id}) ${currency.currencyName} ${currency.currencySymbol}`;
+                        option2.text = `(${currency.id}) ${currency.currencyName} ${currency.currencySymbol}`;
                     }
 
-                    option.value = currency;
-                    toSelect.add(option, null);
-                    fromSelect.add(option, null);
+                    //Add currencies to both drop downs
+                    option1.value = currency;
+                    option2.value = currency;
+                    toSelect.add(option1, null);
+                    fromSelect.add(option2, null);
                 });
             });
         });
+
+//Listen to when the submit button is clicked
+submitButton.addEventListener("click", () => 
+{
+    let amount = amountEntry.value;
+
+    if(amount)
+    {
+        let fromCurrency = fromSelect.options[fromSelect.selectedIndex].value;
+        let toCurrency = toSelect.options[toSelect.selectedIndex].value;
+
+        Object.keys(toCurrency).forEach((key,index) => {
+            console.log(key);
+        });
+
+        console.log(`${fromCurrency}  ${toCurrency['id']}`);
+
+        converter.convertCurrency(amount, fromCurrency, toCurrency, (error, result) => 
+        {
+            console.log(result);
+            convertedValueEntry.value = result;
+            if(result)
+            {
+                convertedValueEntry.value = result;
+            }
+            else
+            {
+                alert("An error occured while making the request"+error);
+            }
+        });
+    }
+    else
+    {
+        alert("please enter the amount which you wish to convert");
+    }
+});
