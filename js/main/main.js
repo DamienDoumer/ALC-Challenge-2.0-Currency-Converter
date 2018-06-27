@@ -1,42 +1,10 @@
-
-class Converter
-{
-    constructor()
-    {
-    }
+import Converter from './converter.js'
+import ServiceWorker from './serviceWorker.js'
 
 
-    getAllCurrencies(callBack)
-    {
-        fetch("https://free.currencyconverterapi.com/api/v5/currencies")
-        .then(response => callBack(null, response))
-        .catch(error => callBack(error, null));
-    }
-
-    //Converts the currency
-    convertCurrency(amount, fromCurrency, toCurrency, callBack)
-    {
-        fromCurrency = encodeURIComponent(fromCurrency);
-        toCurrency = encodeURIComponent(toCurrency);
-        const query = fromCurrency + '_' + toCurrency;
-
-        //we build the URL
-        const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`;
-
-        fetch(url)
-        .catch(error => callBack(error))
-        .then(results => 
-        {
-            //Invoke's the call back method of the upper layer using this class after 
-            //converting the result to json.
-            results.json().then(jsonData => 
-                {
-                    var total = jsonData[query] * amount;
-                    callBack(null, (Math.round(total * 100) / 100));
-                });
-        });
-    }
-}
+//Let's register the service worker.
+let sw = new ServiceWorker();
+sw.registerServiceWorker('./sw.js');
 
 
 const submitButton = document.getElementById("submit_button");
