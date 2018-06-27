@@ -6,9 +6,11 @@ class Converter
     }
 
 
-    getAllCurrencies()
+    getAllCurrencies(callBack)
     {
-        return fetch("https://free.currencyconverterapi.com/api/v5/currencies");
+        fetch("https://free.currencyconverterapi.com/api/v5/currencies")
+        .then(response => callBack(null, response))
+        .catch(error => callBack(error, null));
     }
 
     //Converts the currency
@@ -46,8 +48,11 @@ const convertedValueEntry = document.getElementById('converted_value_entry');
 let converter = new Converter();
 
 //Get all the currencies, then add them to the Drop downs on the index.html page
-converter.getAllCurrencies().then(response => 
+converter.getAllCurrencies((error, response) => 
         { 
+            if(response)
+            {
+                
             response.json().then((jsonData) => {
                 let data = jsonData.results;
                 let set = {data};
@@ -79,11 +84,13 @@ converter.getAllCurrencies().then(response =>
                     fromSelect.add(option2, null);
                 });
             });
+            }
+            else if(error)
+            {
+                alert("An error occured while fetching the currencies.");
+            }
         });
-
-        // converter.convertCurrency(10, 'USD', 'PHP', function(err, amount) {
-        //     console.log(amount);
-        //   });
+        
 
 //Listen to when the submit button is clicked
 submitButton.addEventListener("click", () => 
@@ -99,19 +106,26 @@ submitButton.addEventListener("click", () =>
         let fromCurrencyKey = regExp.exec(fromCurrency)[1];
         let toCurrencyKey = regExp.exec(toCurrency)[1];
 
-        converter.convertCurrency(amount, fromCurrencyKey, toCurrencyKey, (error, result) => 
+        if(fromCurrencyKey == toCurrencyKey)
         {
-            console.log(result);
-            convertedValueEntry.value = result;
-            if(result)
+            convertedValueEntry.value = amount;
+        }
+        else
+        {
+            converter.convertCurrency(amount, fromCurrencyKey, toCurrencyKey, (error, result) => 
             {
+                console.log(result);
                 convertedValueEntry.value = result;
-            }
-            else
-            {
-                alert("An error occured while making the request"+error);
-            }
-        });
+                if(result)
+                {
+                    convertedValueEntry.value = result;
+                }
+                else
+                {
+                    alert("An error occured while making the request"+error);
+                }
+            });
+        }
     }
     else
     {
