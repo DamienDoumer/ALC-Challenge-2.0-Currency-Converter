@@ -31,7 +31,8 @@ class Converter
             //converting the result to json.
             results.json().then(jsonData => 
                 {
-                    callBack(null, jsonData[query]);
+                    var total = jsonData[query] * amount;
+                    callBack(null, (Math.round(total * 100) / 100));
                 });
         });
     }
