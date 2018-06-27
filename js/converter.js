@@ -81,23 +81,25 @@ converter.getAllCurrencies().then(response =>
             });
         });
 
+        // converter.convertCurrency(10, 'USD', 'PHP', function(err, amount) {
+        //     console.log(amount);
+        //   });
+
 //Listen to when the submit button is clicked
 submitButton.addEventListener("click", () => 
 {
     let amount = amountEntry.value;
 
     if(amount)
-    {
-        let fromCurrency = fromSelect.options[fromSelect.selectedIndex].value;
-        let toCurrency = toSelect.options[toSelect.selectedIndex].value;
+    {        
+        let fromCurrency = fromSelect.options[fromSelect.selectedIndex].innerHTML;
+        let toCurrency = toSelect.options[toSelect.selectedIndex].innerHTML;
 
-        Object.keys(toCurrency).forEach((key,index) => {
-            console.log(key);
-        });
+        let regExp = /\(([^)]+)\)/;
+        let fromCurrencyKey = regExp.exec(fromCurrency)[1];
+        let toCurrencyKey = regExp.exec(toCurrency)[1];
 
-        console.log(`${fromCurrency}  ${toCurrency['id']}`);
-
-        converter.convertCurrency(amount, fromCurrency, toCurrency, (error, result) => 
+        converter.convertCurrency(amount, fromCurrencyKey, toCurrencyKey, (error, result) => 
         {
             console.log(result);
             convertedValueEntry.value = result;
