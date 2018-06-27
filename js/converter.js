@@ -48,42 +48,42 @@ const convertedValueEntry = document.getElementById('converted_value_entry');
 let converter = new Converter();
 
 //Get all the currencies, then add them to the Drop downs on the index.html page
-converter.getAllCurrencies((error, response) => 
+converter.getAllCurrencies( (error, response) => 
         { 
             if(response)
             {
                 
-            response.json().then((jsonData) => {
-                let data = jsonData.results;
-                let set = {data};
+                response.json().then((jsonData) => {
+                    let data = jsonData.results;
+                    let set = {data};
                 
-                Object.keys(jsonData.results).forEach((key,index) => {
+                    Object.keys(jsonData.results).forEach((key,index) => {
                     
-                    let currency = jsonData.results[key];
-                    let option1 = document.createElement("option");
-                    let option2 = document.createElement("option");
+                       let currency = jsonData.results[key];
+                      let option1 = document.createElement("option");
+                        let option2 = document.createElement("option");
 
-                    //format the string which will be displayed in each
-                    //drop down's options.
-                    if(!currency.currencySymbol)
-                    {    
-                        option1.text = `(${currency.id}) ${currency.currencyName}`;
-                        option2.text = `(${currency.id}) ${currency.currencyName}`;
-                    }
+                        //format the string which will be displayed in each
+                        //drop down's options.
+                        if(!currency.currencySymbol)
+                        {    
+                            option1.text = `(${currency.id}) ${currency.currencyName}`;
+                            option2.text = `(${currency.id}) ${currency.currencyName}`;
+                        }
                     
-                    else
-                    {
-                        option1.text = `(${currency.id}) ${currency.currencyName} ${currency.currencySymbol}`;
-                        option2.text = `(${currency.id}) ${currency.currencyName} ${currency.currencySymbol}`;
-                    }
+                        else
+                        {
+                            option1.text = `(${currency.id}) ${currency.currencyName} ${currency.currencySymbol}`;
+                            option2.text = `(${currency.id}) ${currency.currencyName} ${currency.currencySymbol}`;
+                        }
 
-                    //Add currencies to both drop downs
-                    option1.value = currency;
-                    option2.value = currency;
-                    toSelect.add(option1, null);
-                    fromSelect.add(option2, null);
+                        //Add currencies to both drop downs
+                        option1.value = currency;
+                        option2.value = currency;
+                        toSelect.add(option1, null);
+                        fromSelect.add(option2, null);
+                    });
                 });
-            });
             }
             else if(error)
             {
@@ -114,7 +114,6 @@ submitButton.addEventListener("click", () =>
         {
             converter.convertCurrency(amount, fromCurrencyKey, toCurrencyKey, (error, result) => 
             {
-                console.log(result);
                 convertedValueEntry.value = result;
                 if(result)
                 {

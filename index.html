@@ -5,27 +5,51 @@
 <head>
     <meta charset="UTF-8"> 
     <link rel="stylesheet" type="text/css" href="styles/semantic.min.css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+  
 </head>
 
-<body>
-    <h1>ALC 3.0 Challenge 2.0 Damien Doumer's Currency Converter</h1>
+<body class="ui center container">
+    <h1 class="ui center aligned tertiary blue header">ALC 3.0 Challenge 2.0 Damien Doumer's Currency Converter</h1>
 
-    <div name="convert_section">
+    <div name="convert_section" class="ui center aligned very padded blue piled segment">
         <form name="convert_form">
 
-            <input type="text" id="amount_entry" placeholder="Amount"><br>
+            <label class="ui label">Amount To Convert:</label>
+
+            <div class="ui size left icon corner labeled input" >
+                <input type="text" id="amount_entry" placeholder="Amount"/>
+                <div class="ui corner label">
+                    <i class="red asterisk icon"></i>
+                </div>
+                <i class="inverted green money bill icon"></i>
+            </div>
+
+            <br>
             
-                <select id="currency_from_dropdown">
-                </select>
+                <div  class="ui list" >
+                    <label class="ui label">From</label>
+                    <select id="currency_from_dropdown">
+                    </select>
+                    <label class="ui label">To</label>
+                    <select id="currency_to_dropdown">
+                    </select>
+                </div>
 
-                <select id="currency_to_dropdown">
-                </select>
+                
 
+                <br/>
+                <button id="submit_button" class="ui blue labeled icon button" type="button">
+                        <i class="inverted large money bill icon"></i>
+                        Convert
+                </button>
 
-                <button id="submit_button"  type="button">Convert</button>
-
-                <input type="text" id="converted_value_entry" disabled/>
-
+                <br/>
+                <label class="ui label">Result</label>
+                <div class="ui disabeled input" >
+                   <input type="text" id="converted_value_entry"
+                          placeholder="Result"/>        
+                </div>
         </form>
     
     </div>
