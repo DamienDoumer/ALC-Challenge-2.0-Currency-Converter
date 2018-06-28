@@ -10,8 +10,8 @@ sw.registerServiceWorker('./sw.js');
 
 //Create an IDb manager object for index db transactions
 let idbMan = new IDBManager();
-idbMan.saveQueryInDatabase('DB', 500);
-
+//idbMan.saveQueryInDatabase('DB', 500);
+//idbMan.getQueryValueByID('DB', (error, v) => {console.log(v['value']); console.log(v)});
 
 const submitButton = document.getElementById("submit_button");
 const toSelect = document.getElementById("currency_to_dropdown");
@@ -20,7 +20,7 @@ const amountEntry = document.getElementById('amount_entry');
 const convertedValueEntry = document.getElementById('converted_value_entry');
 
 //create a converter object
-let converter = new Converter();
+let converter = new Converter(idbMan);
 
 //Get all the currencies, then add them to the Drop downs on the index.html page
 converter.getAllCurrencies( (error, response) => 

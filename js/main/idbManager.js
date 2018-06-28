@@ -35,4 +35,15 @@ export default class IDBManager{
 
         })
     }
+
+    //get value from database
+    getQueryValueByID(query, callBack){
+        //Our ID id query in idb 
+        this._idbPromise.then(db => {
+            return db.transaction(databaseName).objectStore(databaseName)
+                    .get(query);
+        }).then(object => callBack(null, object))
+        .catch(error => callBack(error, null));
+        
+    }
 }
