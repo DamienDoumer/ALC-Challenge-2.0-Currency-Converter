@@ -8,6 +8,8 @@ self.addEventListener('install', (event) => {
         caches.open(cacheName).then((cache) => {
             return cache.addAll([
                 '/',
+                'js/main/idbManager.js',
+                'js/idb.js',
                 'styles/semantic.min.css',
                 'js/main/converter.js',
                 'js/main/main.js',
