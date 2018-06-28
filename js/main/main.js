@@ -1,11 +1,14 @@
-import Converter from './converter.js'
-import lastQuery from './converter.js'
-import ServiceWorker from './serviceWorker.js'
+import Converter from './converter.js';
+import lastQuery from './converter.js';
+import ServiceWorker from './serviceWorker.js';
+import IDBManager from './idbManager.js';
 
 
 //Let's register the service worker.
 let sw = new ServiceWorker();
 sw.registerServiceWorker('./sw.js');
+
+let idbMan = new IDBManager();
 
 const submitButton = document.getElementById("submit_button");
 const toSelect = document.getElementById("currency_to_dropdown");
