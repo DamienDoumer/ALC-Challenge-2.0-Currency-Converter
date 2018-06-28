@@ -8,7 +8,10 @@ import IDBManager from './idbManager.js';
 let sw = new ServiceWorker();
 sw.registerServiceWorker('./sw.js');
 
+//Create an IDb manager object for index db transactions
 let idbMan = new IDBManager();
+idbMan.saveQueryInDatabase('DB', 500);
+
 
 const submitButton = document.getElementById("submit_button");
 const toSelect = document.getElementById("currency_to_dropdown");
