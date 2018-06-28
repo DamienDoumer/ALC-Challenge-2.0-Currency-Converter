@@ -1,11 +1,12 @@
 
+export let lastQuery = '';
 
 export default class Converter
 {
     constructor()
     {
-    }
 
+    }
 
     getAllCurrencies(callBack)
     {
@@ -20,6 +21,7 @@ export default class Converter
         fromCurrency = encodeURIComponent(fromCurrency);
         toCurrency = encodeURIComponent(toCurrency);
         const query = fromCurrency + '_' + toCurrency;
+        lastQuery = query;
 
         //we build the URL
         const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`;

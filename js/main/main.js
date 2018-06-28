@@ -1,11 +1,11 @@
 import Converter from './converter.js'
+import lastQuery from './converter.js'
 import ServiceWorker from './serviceWorker.js'
 
 
 //Let's register the service worker.
 let sw = new ServiceWorker();
 sw.registerServiceWorker('./sw.js');
-
 
 const submitButton = document.getElementById("submit_button");
 const toSelect = document.getElementById("currency_to_dropdown");
@@ -100,3 +100,4 @@ submitButton.addEventListener("click", () =>
         alert("please enter the amount which you wish to convert");
     }
 });
+
