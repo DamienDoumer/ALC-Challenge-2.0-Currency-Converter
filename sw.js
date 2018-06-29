@@ -7,7 +7,7 @@ self.addEventListener('install', (event) => {
         //I cache the currencies
         caches.open(cacheName).then((cache) => {
             return cache.addAll([
-                '/',
+                './',
                 // '/js/main/idbManager.js',
                 // '/js/idb.js',
                 // '/styles/semantic.min.css',
