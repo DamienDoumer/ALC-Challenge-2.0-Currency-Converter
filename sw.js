@@ -8,13 +8,13 @@ self.addEventListener('install', (event) => {
         caches.open(cacheName).then((cache) => {
             return cache.addAll([
                 './',
-                // '/js/main/idbManager.js',
-                // '/js/idb.js',
-                // '/styles/semantic.min.css',
-                // '/js/main/converter.js',
-                // '/js/main/main.js',
-                // '/js/main/serviceWorker.js',
-                // 'https://free.currencyconverterapi.com/api/v5/currencies',
+                './js/main/idbManager.js',
+                './js/idb.js',
+                './styles/semantic.min.css',
+                './js/main/converter.js',
+                './js/main/main.js',
+                './js/main/serviceWorker.js',
+                'https://free.currencyconverterapi.com/api/v5/currencies',
             ]);
         })
     )
