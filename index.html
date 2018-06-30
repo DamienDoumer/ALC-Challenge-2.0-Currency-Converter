@@ -6,15 +6,43 @@
     <meta charset="UTF-8"> 
     <link rel="stylesheet" type="text/css" href="styles/semantic.min.css">
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
-  
+ 
 </head>
 
 <body class="ui center container">
-    <h1 class="ui center aligned tertiary blue header">ALC 3.0 Challenge 2.0 Damien Doumer's Currency Converter</h1>
+
+    <div class="ui center container"> 
+        <h1 class="ui center aligned gray header" 
+            style=" color: #666666; margin-top: 2em;">Currency Converter</h1>
+        <div class="ui fitted divider"></div> 
+    </div>
+    <div name="convert_section" class="ui center aligned very padded piled segment">
+        <div class="ui celled grid">
+            <div class="row">
+                <div class="seven wide column">
+                    <div class="ui celled grid">
+                            <div class="row">
+                                <div class="three wide column"> 
+                                    <label >From : </label>
+                                </div>
+                                <div class="thirteen column">
+                                    <select id="currency_from_dropdown" />
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="two wide column">
+
+                </div>
+                <div class="seven wide column">
+                        <label >A</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <h1 class="ui center aligned tertiary blue header">ALC 3.0 Challenge 2.0 Damien Doumer's Currency Converter</h1>
 
     <div name="convert_section" class="ui center aligned very padded piled segment">
-        <form name="convert_form">
-
             <div>
                     <label class="ui label">Amount To Convert:</label>
         
@@ -63,9 +91,8 @@
                                   placeholder="Result"/>        
                         </div>
                 </div>
-        </form>
     
-    </div>
+    </div> -->
 
 </body>
 

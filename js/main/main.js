@@ -10,8 +10,6 @@ sw.registerServiceWorker('./sw.js');
 
 //Create an IDb manager object for index db transactions
 let idbMan = new IDBManager();
-//idbMan.saveQueryInDatabase('DB', 500);
-//idbMan.getQueryValueByID('DB', (error, v) => {console.log(v['value']); console.log(v)});
 
 const submitButton = document.getElementById("submit_button");
 const toSelect = document.getElementById("currency_to_dropdown");
@@ -96,7 +94,7 @@ submitButton.addEventListener("click", () =>
                 }
                 else
                 {
-                    alert("An error occured while making the request"+error);
+                    alert("An error occured while converting. Please do the conversion online first, before working offline as long as you wish.");
                 }
             });
         }
