@@ -16,8 +16,22 @@
             style=" color: #666666; margin-top: 2em;">Currency Converter</h1>
         <div class="ui fitted divider"></div> 
     </div>
+
     <div name="convert_section" class="ui center aligned very padded piled segment">
         <div class="ui celled grid">
+            <div class="row">
+                <div class="six wide column">
+                    <div class="ui labeled input" >
+                        <label style="margin-top: 0.5em; margin-right: 0.5em;">Enter the Amount</label> <input type="text" id="amount_entry" placeholder="Amount"/>
+                    </div>
+                </div>
+                <div class="four wide column"></div>
+                <div class="six wide column">
+                    <div class="ui disabled labeled input" >
+                        <label style="margin-top: 0.5em; margin-right: 0.5em;">Result</label> <input type="text" id="amount_entry" placeholder="Amount"/>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="seven wide column">
                     <div class="ui celled grid" >
@@ -46,6 +60,16 @@
                             </div>
                         </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="six wide column"></div>
+                <div class="four wide column">
+                    <button id="submit_button" class="ui blue labeled icon button" type="button">
+                            <i class="inverted large money bill icon"></i>
+                            Convert
+                    </button>
+                </div>
+                <div class="six wide column"></div>
             </div>
         </div>
     </div>
