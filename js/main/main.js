@@ -24,9 +24,9 @@ let converter = new Converter(idbMan);
 //Get all the currencies, then add them to the Drop downs on the index.html page
 converter.getAllCurrencies( (error, response) => 
         { 
+            setLoading();
             if(response)
             {
-                setLoading();
                 response.json().then((jsonData) => {
                     let data = jsonData.results;
                     let set = {data};
