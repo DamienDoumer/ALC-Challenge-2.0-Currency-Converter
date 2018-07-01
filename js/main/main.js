@@ -1,5 +1,4 @@
 import Converter from './converter.js';
-import lastQuery from './converter.js';
 import ServiceWorker from './serviceWorker.js';
 import IDBManager from './idbManager.js';
 
@@ -16,6 +15,8 @@ const toSelect = document.getElementById("currency_to_dropdown");
 const fromSelect = document.getElementById("currency_from_dropdown");
 const amountEntry = document.getElementById('amount_entry');
 const convertedValueEntry = document.getElementById('converted_value_entry');
+const exchangeIcon = document.getElementById('exchange_icon');
+const dimmerUno = document.getElementById('dimmer_uno');
 
 //create a converter object
 let converter = new Converter(idbMan);
@@ -25,7 +26,7 @@ converter.getAllCurrencies( (error, response) =>
         { 
             if(response)
             {
-                
+                setLoading
                 response.json().then((jsonData) => {
                     let data = jsonData.results;
                     let set = {data};
@@ -33,8 +34,8 @@ converter.getAllCurrencies( (error, response) =>
                     Object.keys(jsonData.results).forEach((key,index) => {
                     
                        let currency = jsonData.results[key];
-                      let option1 = document.createElement("option");
-                        let option2 = document.createElement("option");
+                       let option1 = document.createElement("option");
+                       let option2 = document.createElement("option");
 
                         //format the string which will be displayed in each
                         //drop down's options.
@@ -85,6 +86,7 @@ submitButton.addEventListener("click", () =>
         }
         else
         {
+            setLoading();
             converter.convertCurrency(amount, fromCurrencyKey, toCurrencyKey, (error, result) => 
             {
                 convertedValueEntry.value = result;
@@ -96,12 +98,21 @@ submitButton.addEventListener("click", () =>
                 {
                     alert("An error occured while converting. Please do the conversion online first, before working offline as long as you wish.");
                 }
+                endLoading();
             });
         }
     }
     else
     {
-        alert("please enter the amount which you wish to convert");
+        alert("Please enter the amount which you wish to convert");
     }
 });
 
+function setLoading(){
+    exchangeIcon.style.visibility = 'hidden';
+    dimmerUno.style.visibility = 'visible';
+}
+function endLoading(){
+    exchangeIcon.style.visibility = 'visible';
+    dimmerUno.style.visibility = 'hidden';
+}
