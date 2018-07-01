@@ -26,7 +26,7 @@ converter.getAllCurrencies( (error, response) =>
         { 
             if(response)
             {
-                setLoading
+                setLoading();
                 response.json().then((jsonData) => {
                     let data = jsonData.results;
                     let set = {data};
@@ -63,6 +63,8 @@ converter.getAllCurrencies( (error, response) =>
             {
                 alert("An error occured while fetching the currencies.");
             }
+
+            endLoading();
         });
         
 
